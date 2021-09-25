@@ -84,10 +84,11 @@ app.delete('/api/courses/:id', (req, res) =>{
         return;
     }
 
-    const index = courses.indexOf(courseId);
+    const index = courses.findIndex(f => f.id === courseId);
+    console.log(`index of courseID ${courseId} is ${index}`);
     courses.splice(index, 1);
 
-    res.status(204); // successful, no content.
+    res.status(204).send(); // successful, no content.
 });
 
 // Server section
