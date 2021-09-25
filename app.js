@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const express = require('express');
+const { array } = require('joi');
 const app = express();
 
 app.use(express.json());
@@ -72,7 +73,22 @@ app.put('/api/courses/:id', (req, res) =>{
 
     // return course
     res.send(course);
-})
+});
+
+app.delete('/api/courses/:id', (req, res) =>{
+    const courseId = parseInt(req.params.id);
+    const course = courses.find(c => c.id === courseId);
+
+    if (!course){
+        res.status(404).send(`Course with ID of ${id} not found.`);
+        return;
+    }
+
+    const index = courses.indexOf(courseId);
+    courses.splice(index, 1);
+
+    res.status(204); // successful, no content.
+});
 
 // Server section
 const port = process.env.PORT || 3000;
